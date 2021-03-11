@@ -10,7 +10,132 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const teamArray = [];
 
+// function for creating manager profile
+function createManager() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "managerName",
+            message: "What is the manager's name?",
+        },
+        {
+            type: "input",
+            name: "managerId",
+            message: "What is the manager's id number?",
+        },
+        {
+            type: "input",
+            name: "managerEmail",
+            message: "What is the manager's email address?",
+        },
+        {
+            type: "input",
+            name: "officeNumber",
+            message: "What is the manager's office number?",
+        },
+    ]).then(res => {
+        const manager = new Manager(res.managerName, res.managerId, res.managerEmail, res.officeNumber)
+        teamArray.push(manager);
+        console.log(teamArray);
+        createTeam();
+    }) 
+}
+
+// function for creating team
+function createTeam() {
+    inquirer.prompt([
+        {
+            type: "list",
+            name: "choice",
+            message: "Which type of employee are you adding?",
+            choices: ["Engineer", "Intern", "I'm done"],
+        },
+    ]).then(res => {
+        switch (res.choice) {
+            case "Engineer":
+              createEngineer();
+              break;
+            case "Intern":
+              createIntern();
+              break;
+            default:
+              makeHTML();
+        }
+    })
+}
+
+// function for creating engineer profile
+function createEngineer() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is the engineer's name?",
+        },
+        {
+            type: "input",
+            name: "engineerId",
+            message: "What is the engineer's id number?",
+        },
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "What is the engineer's email address?",
+        },
+        {
+            type: "input",
+            name: "github",
+            message: "What is the engineer's github username?"
+        }
+    ]).then(res => {
+        const engineer = new Engineer(res.engineerName, res.engineerId, res.engineerEmail, res.github)
+        teamArray.push(engineer);
+        console.log(teamArray);
+        createTeam();
+    })
+}
+
+// function for creating intern profile
+function createIntern() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "internName",
+            message: "What is the intern's name?",
+        },
+        {
+            type: "input",
+            name: "internId",
+            message: "What is the intern's id number?",
+        },
+        {
+            type: "input",
+            name: "internEmail",
+            message: "What is the intern's email address?",
+        },
+        {
+            type: "input",
+            name: "school",
+            message: "What school does the intern go to?"
+        }
+    ]).then(res => {
+        const engineer = new Engineer(res.internName, res.internId, res.internEmail, res.school)
+        teamArray.push(intern);
+        console.log(teamArray);
+        createTeam();
+    })
+}
+
+// Function to make the html file
+function makeHTML() {
+    // Use fs to write html using render function
+    // render(teamArray)
+    // writefilesync
+}
+
+createManager();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
