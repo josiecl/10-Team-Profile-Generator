@@ -121,18 +121,16 @@ function createIntern() {
             message: "What school does the intern go to?"
         }
     ]).then(res => {
-        const engineer = new Engineer(res.internName, res.internId, res.internEmail, res.school)
+        const intern = new Intern(res.internName, res.internId, res.internEmail, res.school)
         teamArray.push(intern);
         console.log(teamArray);
         createTeam();
     })
 }
 
-// Function to make the html file
+// Function to make the html file using fs and render function
 function makeHTML() {
-    // Use fs to write html using render function
-    // render(teamArray)
-    // writefilesync
+    fs.writeFileSync(outputPath, render(teamArray));
 }
 
 createManager();
